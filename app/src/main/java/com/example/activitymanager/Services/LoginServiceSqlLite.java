@@ -8,9 +8,14 @@ import com.example.activitymanager.Entities.User;
 import com.example.activitymanager.ExampleApplication;
 import com.example.activitymanager.RoomDatabase.SampleRoomDatabase;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.qualifiers.ApplicationContext;
+
 
 public class LoginServiceSqlLite implements LoginService{
 
@@ -40,7 +45,15 @@ public class LoginServiceSqlLite implements LoginService{
         }
         User user = new User();
         user.UserName = username;
-        user.Password = password;
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
+            user.Password = new BigInteger(1,hashedPassword).toString(16);
+        }
+        catch (Exception e )
+        {
+        }
         SampleRoomDatabase db = SampleRoomDatabase.getDatabase(ExampleApplication.getAppContext());
         try {
             db.userDao().insert(user);
