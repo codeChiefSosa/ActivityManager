@@ -11,6 +11,6 @@ import com.example.activitymanager.Entities.User;
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     void insert(User user);
-    @Query("Select * from user_table where UserName=:userName")
-    User getUser(String userName);
+    @Query("Select * from user_table where UserName=:userName and Password=:password")
+    User getUser(String userName, String password);
 }

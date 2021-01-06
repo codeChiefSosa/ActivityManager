@@ -18,11 +18,15 @@ public class LoginActivity extends AppCompatActivity {
 
     @Inject
     LoginService loginService;
+    EditText usernameEditText;
+    EditText passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        usernameEditText = findViewById(R.id.username_EditText);
+        passwordEditText = findViewById(R.id.password_EditText);
     }
 
     public void onRegisterButtonClicked(View view) {
@@ -39,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginButtonClicked(View view) {
-        loginService.loginUser("Kuba","");
+        String username = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        loginService.loginUser(username,password);
     }
 }

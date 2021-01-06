@@ -29,7 +29,15 @@ public class LoginServiceSqlLite implements LoginService{
     @Override
     public boolean loginUser(String username, String password) {
         SampleRoomDatabase db = SampleRoomDatabase.getDatabase(ExampleApplication.getAppContext());
-        User user = db.userDao().getUser(username);
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
+            password = new BigInteger(1,hashedPassword).toString(16);
+        }
+        catch (Exception e )
+        {
+        }
+        User user = db.userDao().getUser(username, password);
         return true;
     }
 
