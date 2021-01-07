@@ -1,6 +1,8 @@
 package com.example.activitymanager.Services;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import java.security.MessageDigest;
 import javax.inject.Inject;
 
 import dagger.hilt.android.qualifiers.ApplicationContext;
+import io.reactivex.Single;
 
 
 public class LoginServiceSqlLite implements LoginService{
@@ -36,19 +39,31 @@ public class LoginServiceSqlLite implements LoginService{
         }
         catch (Exception e )
         {
+            return false;
         }
-        User user = db.userDao().getUser(username, password);
-        return true;
-    }
+        try {
+            Single<User> user = db.userDao().getUser(username, password);
+            ExampleApplication.LoggedUser = user.blockingGet();
+            return true;
+        }
+        catch (Exception ex){
+            new Handler(Looper.getMainLooper()).post(()->
+                    Toast.makeText(ExampleApplication.getAppContext(),"Wrong username or password!", Toast.LENGTH_LONG).show());
+            return  false;
+            }
+        }
+
 
     @Override
     public boolean registerUser(String username, String password) {
         if (username.isEmpty()) {
-            Toast.makeText(ExampleApplication.getAppContext(), "Username cant be empty!", Toast.LENGTH_LONG).show();
+            new Handler(Looper.getMainLooper()).post(() ->
+                    Toast.makeText(ExampleApplication.getAppContext(), "Username cant be empty!", Toast.LENGTH_LONG).show());
             return false;
         }
         if (password.length() < 5){
-            Toast.makeText(ExampleApplication.getAppContext(), "Password too short! Minimum 5 characters!", Toast.LENGTH_LONG).show();
+            new Handler(Looper.getMainLooper()).post(() ->
+                    Toast.makeText(ExampleApplication.getAppContext(), "Password too short! Minimum 5 characters!", Toast.LENGTH_LONG).show());
             return false;
         }
         User user = new User();
@@ -67,7 +82,7 @@ public class LoginServiceSqlLite implements LoginService{
             db.userDao().insert(user);
         }
         catch (Exception e){
-            Toast.makeText(ExampleApplication.getAppContext(), "User already exists!",Toast.LENGTH_LONG).show();
+            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(ExampleApplication.getAppContext(), "User already exists!",Toast.LENGTH_LONG).show());
             return false;
         }
         return true;

@@ -2,12 +2,18 @@ package com.example.activitymanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.activitymanager.AsyncResponses.AsyncResponse;
 import com.example.activitymanager.Entities.User;
 import com.example.activitymanager.Services.LoginService;
+
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
@@ -20,6 +26,10 @@ public class LoginActivity extends AppCompatActivity {
     LoginService loginService;
     EditText usernameEditText;
     EditText passwordEditText;
+    TextView createdUserTextView;
+
+    //private  boolean registerSuccessful;
+    private boolean loginSuccessful;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         usernameEditText = findViewById(R.id.username_EditText);
         passwordEditText = findViewById(R.id.password_EditText);
+        createdUserTextView = findViewById(R.id.accountCreated_TextView);
     }
 
     public void onRegisterButtonClicked(View view) {
@@ -35,16 +46,60 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordText = findViewById(R.id.password_EditText);
         String name = nameText.getText().toString();
         String password = passwordText.getText().toString();
-        try {
-            loginService.registerUser(name, password);
-        } catch (Exception e) {
-            e.printStackTrace();
+        boolean test = false;
+
+        try{
+             test = new RegisterUserTask(name, password)
+                     .execute()
+                     .get();
+        }
+        catch (Exception ex) {
+        }
+        if (test){
+            createdUserTextView.setAlpha(1f);
+            createdUserTextView.setVisibility(View.VISIBLE);
+            createdUserTextView.animate()
+                    .alpha(0f)
+                    .setDuration(5000);
         }
     }
 
     public void onLoginButtonClicked(View view) {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        loginService.loginUser(username,password);
+        try {
+            new LoginUserTask(username,password)
+                    .execute()
+                    .get();
+        }
+        catch (Exception ex){
+        }
+        }
+
+    private class RegisterUserTask extends AsyncTask<Void,Void,Boolean>
+    {
+        private String username;
+        private String password;
+        RegisterUserTask(String username, String password){
+            this.username = username;
+            this.password = password;
+        }
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return loginService.registerUser(username, password);
+        }
+    }
+    private class LoginUserTask extends AsyncTask<Void,Void,Boolean>{
+
+        private String username;
+        private String password;
+        LoginUserTask(String username, String password){
+            this.username = username;
+            this.password = password;
+        }
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return loginService.loginUser(username,password);
+        }
     }
 }
