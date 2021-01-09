@@ -2,6 +2,7 @@ package com.example.activitymanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.activitymanager.Entities.Activity;
 import com.example.activitymanager.Entities.User;
@@ -69,6 +71,12 @@ public class AddActivity extends AppCompatActivity {
             activity.activityTime = activityTime;
             activity.userCreatorId = ExampleApplication.LoggedUser.id;
             new AddActivityTask(activity).execute();
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
+        else{
+            new Handler(getMainLooper()).post(() ->
+                    Toast.makeText(this,"Description cant be empty!",Toast.LENGTH_LONG).show());
         }
     }
 

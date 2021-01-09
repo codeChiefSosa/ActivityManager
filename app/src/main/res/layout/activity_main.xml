@@ -12,18 +12,70 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="TEST"
+        android:text="test"
+        android:gravity="center"
         android:textSize="50dp"
         android:id="@+id/hello_EditText"/>
+
+    <TextView
+        android:id="@+id/noTraining_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        app:layout_constraintTop_toBottomOf="@id/hello_EditText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Looks like you have no trainings yet. Feel free to click the 'PLUS' button"
+        android:layout_margin="50dp"/>
+"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lastTraining_ConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sample_background"
+        app:layout_constraintTop_toBottomOf="@id/hello_EditText"
+        android:layout_margin="50dp">
+
+        <TextView
+            android:id="@+id/lastTrainingTitle_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Last training!"
+            android:gravity="center_horizontal"
+            android:textSize="30dp"/>
+        <TextView
+            android:id="@+id/lastTrainingTime_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lastTrainingTitle_TextView"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Time:"/>
+        <TextView
+            android:id="@+id/lastTrainingDescription_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/lastTrainingTime_TextView"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:textSize="20dp"
+            android:text="Description:"
+            android:layout_marginTop="20dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/viewAllTrainings_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/hello_EditText"
+        app:layout_constraintTop_toBottomOf="@id/lastTraining_ConstraintLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="View all trainings!"
+        android:backgroundTint="@color/primary_color"
         android:onClick="OnViewAllTrainingsButtonClicked"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,8 +83,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
+        android:backgroundTint="@color/primary_color"
+        android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:onClick="onAddActivityButtonClicked"
         android:layout_margin="16dp" />
 
