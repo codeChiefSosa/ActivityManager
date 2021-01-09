@@ -6,16 +6,19 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.activitymanager.DAOs.ActivityDao;
 import com.example.activitymanager.DAOs.UserDao;
+import com.example.activitymanager.Entities.Activity;
 import com.example.activitymanager.Entities.User;
 
 import javax.inject.Inject;
 
 
-@Database(entities = {User.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Activity.class}, version = 2, exportSchema = false)
 
 public abstract class SampleRoomDatabase extends RoomDatabase {
     public abstract UserDao userDao();
+    public abstract ActivityDao activityDao();
 
     public static volatile SampleRoomDatabase INSTANCE;
 

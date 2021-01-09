@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="small_font">10dp</dimen>
+    <dimen name="small_font">10sp</dimen>
+    <dimen name="title_font">40sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

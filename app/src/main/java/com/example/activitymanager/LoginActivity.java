@@ -2,6 +2,7 @@ package com.example.activitymanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -28,8 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordEditText;
     TextView createdUserTextView;
 
-    //private  boolean registerSuccessful;
-    private boolean loginSuccessful;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +45,16 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordText = findViewById(R.id.password_EditText);
         String name = nameText.getText().toString();
         String password = passwordText.getText().toString();
-        boolean test = false;
+        boolean registerSuccessful = false;
 
         try{
-             test = new RegisterUserTask(name, password)
+             registerSuccessful = new RegisterUserTask(name, password)
                      .execute()
                      .get();
         }
         catch (Exception ex) {
         }
-        if (test){
+        if (registerSuccessful){
             createdUserTextView.setAlpha(1f);
             createdUserTextView.setVisibility(View.VISIBLE);
             createdUserTextView.animate()
@@ -67,12 +66,17 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginButtonClicked(View view) {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
+        boolean loginSuccessful = false;
         try {
-            new LoginUserTask(username,password)
+            loginSuccessful = new LoginUserTask(username,password)
                     .execute()
                     .get();
         }
         catch (Exception ex){
+        }
+        if(loginSuccessful){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         }
         }
 
