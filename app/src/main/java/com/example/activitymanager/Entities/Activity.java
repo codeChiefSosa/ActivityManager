@@ -3,7 +3,7 @@ package com.example.activitymanager.Entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "activity_table")
 public class Activity {
 
     @PrimaryKey(autoGenerate = true)

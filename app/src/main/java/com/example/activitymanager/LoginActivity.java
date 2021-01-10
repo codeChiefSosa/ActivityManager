@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onRegisterButtonClicked(View view) {
 
-        EditText nameText = findViewById(R.id.username_EditText);
-        EditText passwordText = findViewById(R.id.password_EditText);
-        String name = nameText.getText().toString();
-        String password = passwordText.getText().toString();
+        //EditText nameText = findViewById(R.id.username_EditText);
+        //EditText passwordText = findViewById(R.id.password_EditText);
+        String name = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
         boolean registerSuccessful = false;
 
         try{

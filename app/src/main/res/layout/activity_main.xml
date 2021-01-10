@@ -12,9 +12,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="test"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:gravity="center"
-        android:textSize="50dp"
+        android:textSize="50sp"
         android:id="@+id/hello_EditText"/>
 
     <TextView

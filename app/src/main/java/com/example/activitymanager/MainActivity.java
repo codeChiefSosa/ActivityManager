@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         adjustLayoutDependingOnLastTraining();
     }
 
-    public void assignViews(){
+    public void assignViews() {
         helloTextView = findViewById(R.id.hello_EditText);
         noTrainingTextView = findViewById(R.id.noTraining_TextView);
         lastTrainingLayout = findViewById(R.id.lastTraining_ConstraintLayout);
@@ -52,21 +52,20 @@ public class MainActivity extends AppCompatActivity {
         viewAllTrainingsButton = findViewById(R.id.viewAllTrainings_Button);
         helloTextView.setText("Hello " + ExampleApplication.LoggedUser.UserName + "!");
     }
-    public void adjustLayoutDependingOnLastTraining(){
+
+    public void adjustLayoutDependingOnLastTraining() {
         assignViews();
         try {
             new GetLastActivityTask()
                     .execute()
                     .get();
+        } catch (Exception ex) {
         }
-        catch (Exception ex){
-        }
-        if (lastTraining != null){
+        if (lastTraining != null) {
             lastTrainingTimeTextView.setText(lastTraining.activityTime);
             lastTrainingDescriptionTextView.setText(lastTraining.activityText);
             noTrainingTextView.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             lastTrainingLayout.setVisibility(View.GONE);
             viewAllTrainingsButton.setVisibility(View.GONE);
             noTrainingTextView.setVisibility(View.VISIBLE);
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private class GetLastActivityTask extends AsyncTask<Void,Void,Void>{
+    private class GetLastActivityTask extends AsyncTask<Void, Void, Void> {
 
 
         @Override
@@ -96,19 +95,5 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-
-    private class AddActivityAsyncTask extends  AsyncTask<Void,Void,Void>{
-        private Activity activity;
-        AddActivityAsyncTask(Activity activity){
-            this.activity = activity;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            SampleRoomDatabase.getDatabase(ExampleApplication.getAppContext())
-                    .activityDao()
-                    .insert(activity);
-            return null;
-        }
-    }
 }
+
