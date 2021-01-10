@@ -11,6 +11,8 @@ Hilt - Biblioteka do Depedency Injection
 
 ![Screenshot](readme_images/walidacja_danych.png)
 Podstawowa walidacja danych.
+![Screenshot](readme_images/hashed_password.png)
+Zahashowane haslo w tabeli user
 ![Screenshot](readme_images/main_screen_without_training.png)
 Glowny ekran jesli uzytkownik nie ma dodanego zadnego treningu.
 ![Screenshot](readme_images/traning_screen.png)
